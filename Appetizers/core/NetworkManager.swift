@@ -9,41 +9,50 @@ import Foundation
 
 final class NetworkManager {
     static let shared = NetworkManager()
-    static let baseUrl = "https://seanallen-course-backend.herokuapp.com/swiftui-fundamentals/"
-    private let appetizerUrl = baseUrl+"appetizers"
+    static let baseUrl = "https://www.themealdb.com/api/json/v1/1/"
+    private let categories = baseUrl+"categories.php"
+    private let meals = baseUrl+"search.php?s="
+    private let meal = baseUrl+"lookup.php?i="
     private init(){}
 
-    func getAppetizers(completed :@escaping (Result<[Appetizer],APError>)->Void){
 
-        guard let url = URL(string: appetizerUrl) else {
-            completed(.failure(.invalidURL))
-            return
+    func getCategories() async throws ->[Category] {
+        guard let url = URL(string:categories) else {
+            throw APError.invalidURL
+        }
+        let (data ,response) = try await URLSession.shared.data(for: URLRequest(url: url))
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            throw APError.invalidResponse
+        }
+        do {
+            let decoder = JSONDecoder()
+            let decoded = try decoder.decode(CategoryResponse.self, from: data)
+            return decoded.categories
+        }catch {
+            throw APError.invalidData
         }
 
-        let task = URLSession.shared.dataTask(with: URLRequest(url:url) ){ data,response,error in
-            if let _ = error {
-                completed(.failure(.unableToComplete))
-                return
-            }
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completed(.failure(.invalidResponse))
-                return
-            }
-
-            guard let data = data else {
-                completed(.failure(.invalidData))
-                return
-            }
-            do{
-                let  decoder = JSONDecoder()
-                let  decodeResponse = try decoder.decode(AppetizerResponse.self, from: data)
-                completed(.success(decodeResponse.request))
-            }catch {
-                completed(.failure(.unableToComplete))
-            }
-
+    }
+    func getMeals(meal :String) async throws -> [Meal] {
+        guard let url = URL(string :meals + meal) else {
+            throw APError.invalidURL
         }
-        task.resume()
+
+        let (data,response) = try await URLSession.shared.data(for: URLRequest(url :url))
+
+        guard let response = response as? HTTPURLResponse ,
+              response.statusCode == 200 else{
+            throw APError.invalidResponse
+        }
+        do{
+            let decoder = JSONDecoder()
+            let decoded = try decoder.decode(MealsRespponse.self, from: data)
+            return decoded.meals
+        }catch {
+            throw APError.invalidData
+        }
 
     }
 
