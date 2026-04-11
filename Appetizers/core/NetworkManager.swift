@@ -5,10 +5,11 @@
 //  Created by rojin on 9.04.2026.
 //
 
-import Foundation
+import UIKit
 
 final class NetworkManager {
     static let shared = NetworkManager()
+    private let cache = NSCache<NSString,UIImage>()
     static let baseUrl = "https://www.themealdb.com/api/json/v1/1/"
     private let categories = baseUrl+"categories.php"
     private let meals = baseUrl+"search.php?s="
@@ -33,8 +34,8 @@ final class NetworkManager {
         }catch {
             throw APError.invalidData
         }
-
     }
+
     func getMeals(meal :String) async throws -> [Meal] {
         guard let url = URL(string :meals + meal) else {
             throw APError.invalidURL
@@ -55,5 +56,27 @@ final class NetworkManager {
         }
 
     }
+
+    func downloadImage(from urlString: String) async -> UIImage? {
+        let cacheKey = NSString(string: urlString)
+
+        if let image = cache.object(forKey: cacheKey) {
+            return image
+        }
+
+        guard let url = URL(string: urlString) else { return nil }
+
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+
+            guard let image = UIImage(data: data) else { return nil }
+            cache.setObject(image, forKey: cacheKey)
+
+            return image
+        } catch {
+            return nil
+        }
+    }
+
 
 }

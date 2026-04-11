@@ -1,0 +1,60 @@
+//
+//  MealDetailView.swift
+//  Appetizers
+//
+//  Created by rojin on 11.04.2026.
+//
+
+import SwiftUI
+
+struct MealDetailView: View {
+
+    var meal:Meal
+    @Binding var isDetail:Bool
+
+    var body: some View {
+        VStack{
+            ImageWidget(urlString: meal.strMealThumb)
+            Text(meal.strMeal) .font(.title)
+                .fontWeight(.medium)
+            InstructionsWidget(strInst: meal.strInstructions)
+            Spacer()
+            Button{
+
+            }label :{
+                Text("Add to Order")
+                    .font(.title3)
+                    .fontWeight(.medium)
+                    .frame(width: 200,height: 50)
+                    .foregroundColor(.white)
+                    .background(Color(.primaryButton))
+                    .cornerRadius(8)
+            }.padding(.bottom,20)
+
+
+        }.frame(width: 320,height: 680)
+            .background(Color(.systemBackground))
+            .cornerRadius(12)
+            .shadow(radius: 48)
+            .overlay(alignment: .topTrailing) {
+                Button {
+                    isDetail = false
+                } label: {
+                    ZStack {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.white)
+                            .opacity(0.6)
+                        Image(systemName: "xmark")
+                            .imageScale(.medium)
+                            .foregroundColor(.black)
+                    }.padding(6)
+                }
+            }
+
+    }
+}
+
+#Preview {
+    MealDetailView(meal: MealMockData.sampleMeal, isDetail: .constant(false))
+}
