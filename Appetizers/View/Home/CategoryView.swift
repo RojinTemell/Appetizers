@@ -8,24 +8,23 @@
 import SwiftUI
 
 struct CategoryView: View {
+    @Environment(AppRouter.self) private var router
     @StateObject var viewmodel = CategoryViewModel()
     var body: some View {
-        NavigationStack{
             ScrollView{
                 LazyVGrid(columns:viewmodel.columns){
                     ForEach(viewmodel.categories){
                         category in
-                        NavigationLink(value: category){
                             CategoryWidget(category: category)
-                        }
+                            .onTapGesture {
+                                router.pushHome(.meals)
+                            }
+
                     }
                 }
             }
             .navigationTitle("Category")
-            .navigationDestination(for:Category.self){ category in MealsView( mealString: category.strCategory)
 
-            }
-        }
         .task{
             await viewmodel.getCategories()
         }.alert(item: $viewmodel.alertItem){ alertItem in

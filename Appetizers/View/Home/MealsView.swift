@@ -18,7 +18,7 @@ struct MealsView: View {
             MealWidget(meal: meal)
                 .onTapGesture {
                     selectedMeal = meal
-                    isDetail = true
+                    isDetail     = true
                 }
 
         }

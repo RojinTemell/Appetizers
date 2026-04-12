@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct AppetizersApp: App {
+    @State private var router = AppRouter()
     var body: some Scene {
         WindowGroup {
-            AppetizersTabView()
+            RootTabView()
+                .environment(router)
         }
     }
 }
