@@ -17,9 +17,8 @@ struct CategoryView: View {
                         category in
                             CategoryWidget(category: category)
                             .onTapGesture {
-                                router.pushHome(.meals)
+                                router.navigateInHome(to:.meals(meal: category.strCategory))
                             }
-
                     }
                 }
             }
@@ -37,5 +36,5 @@ struct CategoryView: View {
 }
 
 #Preview {
-    CategoryView()
+    CategoryView().environment(AppRouter())
 }

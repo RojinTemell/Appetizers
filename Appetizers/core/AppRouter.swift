@@ -12,42 +12,51 @@ import SwiftUI
 @Observable
 final class AppRouter {
     var selectedTab: Tab = .category
-    var categoryPath    = NavigationPath()
-    var accountPath = NavigationPath()
-    var orderPath   = NavigationPath()
+    var categoryPath     = NavigationPath()
+    var accountPath      = NavigationPath()
+    var orderPath        = NavigationPath()
 
-    func pushHome(_ route: CategoryRoute) {
+    func navigateInStore(to route: OrderRoute) {
+        orderPath.append(route)
+    }
+    func navigateInHome(to route: CategoryRoute) {
         categoryPath.append(route)
     }
-
+    func popToOrderRoute() {
+        orderPath = NavigationPath()
+    }
     func popHome() {
         guard !categoryPath.isEmpty else { return }
         categoryPath.removeLast()
     }
-
-    func popHomeToRoot() {
-        categoryPath.removeLast(categoryPath.count)
+    func goToMealDetail(meal: Meal,mealString:String) {
+        selectedTab = .category
+        categoryPath = NavigationPath()
+        categoryPath.append(CategoryRoute.meals(meal:mealString ))
+        categoryPath.append(CategoryRoute.mealDetail(meal: meal))
     }
-
-    func pushAccount(_ route: AccountRoute) {
-        accountPath.append(route)
+    func goToProductDetail() {
+        selectedTab = .order
+        orderPath = NavigationPath()
+        orderPath.append(OrderRoute.products)
+        orderPath.append(OrderRoute.detail)
+    }
+    func popHomeToRoot() {
+        categoryPath = NavigationPath()  // removeLast yerine direkt sıfırla
     }
 
     func popAccountToRoot() {
         accountPath.removeLast(accountPath.count)
     }
-    func pushOrder(_ route: OrderRoute) {
-        orderPath.append(route)
-    }
 
-    func switchTab(to tab: Tab, resetStack: Bool = false) {
-        selectedTab = tab
-        if resetStack {
-            switch tab {
-            case .category:    popHomeToRoot()
-            case .account: popAccountToRoot()
-            case .order:   orderPath.removeLast(orderPath.count)
-            }
-        }
-    }
+//    func switchTab(to tab: Tab, resetStack: Bool = false) {
+//        selectedTab = tab
+//        if resetStack {
+//            switch tab {
+//            case .category: popHomeToRoot()
+//            case .account : popAccountToRoot()
+//            case .order   : orderPath.removeLast(orderPath.count)
+//            }
+//        }
+//    }
 }

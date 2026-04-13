@@ -9,34 +9,31 @@ import SwiftUI
 
 struct MealsView: View {
     @StateObject var viewmodel = MealsViewmodel()
-    @State private var selectedMeal: Meal?
-    @State private var isDetail: Bool = false
     var mealString: String
 
     var body: some View {
         List(viewmodel.meals) { meal in
             MealWidget(meal: meal)
                 .onTapGesture {
-                    selectedMeal = meal
-                    isDetail     = true
+                    viewmodel.selectedMeal = meal
+                    viewmodel.isDetail     = true
                 }
 
         }
         .navigationTitle(mealString)
-        .disabled(isDetail)
-        .blur(radius: isDetail ? 20 : 0)
+        .navigationBarBackButtonHidden(viewmodel.isDetail)
+        .disabled(viewmodel.isDetail)
+        .blur(radius: viewmodel.isDetail ? 20 : 0)
         .task {
             await viewmodel.getMeals(meal: mealString)
         }
 
         .overlay{
-            if isDetail {
-                // Arka planı karartmak için bir Rectangle eklenebilir
+            if viewmodel.isDetail {
                 Color.black.opacity(0.3)
                     .ignoresSafeArea()
-                    .onTapGesture { isDetail = false } // Dışarı basınca kapatma
-
-                MealDetailView(meal: selectedMeal ?? MealMockData.sampleMeal, isDetail: $isDetail)
+                    .onTapGesture { viewmodel.isDetail = false }
+                MealDetailView(meal: viewmodel.selectedMeal ?? MealMockData.sampleMeal, isDetail: $viewmodel.isDetail).padding(.bottom, 100)
             }
         }
         .alert(item: $viewmodel.alertItem) { alertItem in

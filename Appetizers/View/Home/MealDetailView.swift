@@ -17,10 +17,10 @@ struct MealDetailView: View {
             ImageWidget(urlString: meal.strMealThumb)
             Text(meal.strMeal) .font(.title)
                 .fontWeight(.medium)
-            InstructionsWidget(strInst: meal.strInstructions)
-            Spacer()
-            Button{
 
+          InstructionsWidget(strInst: meal.strInstructions)
+               .frame(maxHeight:300)
+            Button{
             }label :{
                 Text("Add to Order")
                     .font(.title3)
@@ -32,7 +32,7 @@ struct MealDetailView: View {
             }.padding(.bottom,20)
 
 
-        }.frame(width: 320,height: 680)
+        }.frame(width: 320,height: 600)
             .background(Color(.systemBackground))
             .cornerRadius(12)
             .shadow(radius: 48)
