@@ -49,14 +49,4 @@ final class AppRouter {
         accountPath.removeLast(accountPath.count)
     }
 
-//    func switchTab(to tab: Tab, resetStack: Bool = false) {
-//        selectedTab = tab
-//        if resetStack {
-//            switch tab {
-//            case .category: popHomeToRoot()
-//            case .account : popAccountToRoot()
-//            case .order   : orderPath.removeLast(orderPath.count)
-//            }
-//        }
-//    }
 }

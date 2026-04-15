@@ -11,7 +11,7 @@ struct MealDetailView: View {
 
     var meal:Meal
     @Binding var isDetail:Bool
-
+    @EnvironmentObject var orderViewModel: OrderViewModel
     var body: some View {
         VStack{
             ImageWidget(urlString: meal.strMealThumb)
@@ -21,15 +21,13 @@ struct MealDetailView: View {
           InstructionsWidget(strInst: meal.strInstructions)
                .frame(maxHeight:300)
             Button{
+                orderViewModel.add(meal)
+                isDetail = false
             }label :{
                 Text("Add to Order")
-                    .font(.title3)
-                    .fontWeight(.medium)
-                    .frame(width: 200,height: 50)
-                    .foregroundColor(.white)
-                    .background(Color(.primaryButton))
-                    .cornerRadius(8)
-            }.padding(.bottom,20)
+            }
+            .modifier(StandarButtonStyle())
+            .padding(.bottom,20)
 
 
         }.frame(width: 320,height: 600)

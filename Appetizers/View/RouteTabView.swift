@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RootTabView: View {
     @State private var router = AppRouter()
-
+    @EnvironmentObject var order: OrderViewModel
     var body: some View {
         TabView(selection: $router.selectedTab) {
             NavigationStack(path:   $router.categoryPath) {
@@ -33,21 +33,17 @@ struct RootTabView: View {
             .tag(Tab.account)
 
             NavigationStack(path: $router.orderPath) {
-                CategoryListView()
-                    .navigationDestination(for: OrderRoute.self) { route in
-                        switch route {
-                        case .products:
-                            ProductListView()
-                        case .detail:
-                            ProductDetailView()
-                        }
-                    }
+                OrderView()
+
             }
             .tabItem { Label("Orders", systemImage: "bag") }
             .tag(Tab.order)
-        } .environment(router)
+            .badge(order.orders.count)
+        }
+        .tint(.primaryButton)
+        .environment(router)
     }
 }
 #Preview {
-    RootTabView().environment(AppRouter())
+    RootTabView().environment(AppRouter()).environmentObject(OrderViewModel())
 }

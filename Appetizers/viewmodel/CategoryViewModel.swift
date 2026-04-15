@@ -12,7 +12,7 @@ final class CategoryViewModel:ObservableObject {
     @Published var categories : [Category] = []
     @Published var alertItem: AlertItem?
 
-    let columns  = [GridItem(.adaptive(minimum: 180), spacing: 16)]
+    let columns  = [GridItem(.adaptive(minimum: 200), spacing: 0)]
 
     func getCategories() async{
         guard categories.isEmpty else { return }

@@ -19,9 +19,9 @@ struct CategoryWidget: View {
             Text(category.strCategory)
                 .padding(.bottom)
                 .font(.title2)
-                .foregroundStyle(.black)
+                .foregroundStyle(Color(.systemGray))
 
-        }.background(Color.gray.opacity(0.1))
+        }.background(Color.gray.opacity(0.11))
             .cornerRadius(12)
     }
 }
