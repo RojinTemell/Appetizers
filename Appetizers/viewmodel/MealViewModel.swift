@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
-import Combine
 
-final class MealsViewmodel:ObservableObject {
-    @Published var meals : [Meal] = []
-    @Published var alertItem: AlertItem?
-    @Published var isDetail :Bool = false
-    @Published var selectedMeal :Meal?
+@Observable
+final class MealsViewmodel{
+     var meals : [Meal] = []
+     var alertItem: AlertItem?
+     var isDetail :Bool = false
+     var selectedMeal :Meal?
 
 
     func getMeals(meal:String)async{

@@ -9,21 +9,34 @@ import SwiftUI
 
 struct CategoryView: View {
     @Environment(AppRouter.self) private var router
-    @StateObject var viewmodel = CategoryViewModel()
+    @State private var viewmodel = CategoryViewModel()
     var body: some View {
-            ScrollView{
-                LazyVGrid(columns:viewmodel.columns){
-                    ForEach(viewmodel.categories){
-                        category in
+        Group{
+            switch viewmodel.state{
+            case .idle, .loading:
+                ProgressView("Loading posts...")
+            case .success:
+                ScrollView{
+                    LazyVGrid(columns:viewmodel.columns){
+                        ForEach(viewmodel.categories){
+                            category in
                             CategoryWidget(category: category)
-                            .onTapGesture {
-                                router.navigateInHome(to:.meals(meal: category.strCategory))
-                            }
+                                .onTapGesture {
+                                    router.navigateInHome(to:.meals(meal: category.strCategory))
+                                }
+                        }
                     }
                 }
+            case .failure(let message):
+                ContentUnavailableView(
+                    "Something went wrong",
+                    systemImage: "exclamationmark.triangle",
+                    description: Text(message)
+                )
             }
-            .navigationTitle("Category")
 
+        }
+        .navigationTitle("Category")
         .task{
             await viewmodel.getCategories()
         }.alert(item: $viewmodel.alertItem){ alertItem in

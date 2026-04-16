@@ -6,19 +6,21 @@
 //
 
 import SwiftUI
-import Combine
 
-final class CategoryViewModel:ObservableObject {
-    @Published var categories : [Category] = []
-    @Published var alertItem: AlertItem?
-
+@Observable
+final class CategoryViewModel{
+    var categories : [Category] = []
+    var alertItem: AlertItem?
+    private(set) var state: CategoryViewState = .idle
     let columns  = [GridItem(.adaptive(minimum: 200), spacing: 0)]
 
     func getCategories() async{
+        state = .loading
         guard categories.isEmpty else { return }
         do {
             categories = try await NetworkManager.shared.getCategories()
             print(categories.count)
+            state = .success
         }catch let error as APError{
             switch error {
             case .invalidURL:
@@ -29,9 +31,15 @@ final class CategoryViewModel:ObservableObject {
                 alertItem = AlertContext.invalidData
             case .unableToComplete:
                 alertItem = AlertContext.unableToComplete
+                state = .failure(error.localizedDescription)
             }
         }catch {
             alertItem = AlertContext.unableToComplete
+            state = .failure(error.localizedDescription)
         }
     }
+}
+
+enum CategoryViewState {
+    case idle, loading, success, failure(String)
 }

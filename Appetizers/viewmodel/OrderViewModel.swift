@@ -10,8 +10,7 @@ import Combine
 
 
 final class OrderViewModel :ObservableObject {
-
-    @Published var orders :[Meal] = []
+  @Published  var orders :[Meal] = []
 
     func add (_ meal :Meal){
         print("ekleniyor")
@@ -19,7 +18,7 @@ final class OrderViewModel :ObservableObject {
         print("eklendi \(orders.count)")
 
     }
-    
+
     func delete (at offsets:IndexSet){
         orders.remove(atOffsets: offsets)
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MealsView: View {
-    @StateObject var viewmodel = MealsViewmodel()
+    @State var viewmodel = MealsViewmodel()
     var mealString: String
 
     var body: some View {
