@@ -6,34 +6,34 @@
 //
 
 import SwiftUI
-import Combine
 
-final class AccountViewModel : ObservableObject{
-    @AppStorage("user") private var userData: Data?
-    @Published var user :User = User()
-    @Published var alertItem: AlertItem?
+@Observable
+final class AccountViewModel {
+    
+    private let userManager = UserManager()
+    var user :User = User()
+    var alertItem: AlertItem?
 
     func saveChances() {
         guard isValidForm else {
             return
         }
         do{
-            let data = try JSONEncoder().encode(user)
-            userData = data
+            try userManager.save(user: user)
             alertItem = AlertContext.userSaveSuccess
         }catch{
             alertItem = AlertContext.invalidUserData
-        }
-    }
-    func retrieveUser() {
-        guard let userData else { return }
+        }}
 
+
+    func retrieveUser() {
         do {
-            user = try JSONDecoder().decode(User.self, from: userData)
+            if let savedUser = try userManager.retrieve(){
+                user = savedUser
+            }
         } catch {
             alertItem = AlertContext.invalidUserData
         }
-
     }
 
     var isValidForm :Bool{

@@ -14,6 +14,7 @@ final class CategoryViewModel{
     private(set) var state: CategoryViewState = .idle
     let columns  = [GridItem(.adaptive(minimum: 200), spacing: 0)]
 
+
     func getCategories() async{
         state = .loading
         guard categories.isEmpty else { return }

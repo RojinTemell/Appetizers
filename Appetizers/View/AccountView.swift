@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct AccountView: View {
-    @StateObject var viewModel = AccountViewModel()
+    @State private var viewModel = AccountViewModel()
     @FocusState private var focusedTextField :FormTextField?
 
     enum FormTextField{
         case name,surname,mail
     }
     var body: some View {
+        @Bindable var viewModel = viewModel
         NavigationView{
             Form{
                 Section("Peronal Info"){

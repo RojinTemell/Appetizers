@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
-import Combine
 
-final class ImageLoader :ObservableObject{
+@MainActor
+@Observable
+final class ImageLoader {
 
-    @Published var image:UIImage? = nil
-
+  var image:UIImage? = nil
     func load(from urlString:String)async{
         let image =  await NetworkManager.shared.downloadImage(from:urlString)
         self.image = image

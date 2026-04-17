@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ImageWidget: View {
-    @StateObject private var imageLoader = ImageLoader()
+    @State private var imageLoader = ImageLoader()
     let urlString: String
 
     var body: some View {

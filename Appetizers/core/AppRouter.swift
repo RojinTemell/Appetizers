@@ -46,6 +46,7 @@ final class AppRouter {
     }
 
     func popAccountToRoot() {
+        guard !accountPath.isEmpty else { return }
         accountPath.removeLast(accountPath.count)
     }
 

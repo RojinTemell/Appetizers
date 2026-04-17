@@ -9,7 +9,8 @@ import SwiftUI
 
 @main
 struct AppetizersApp: App {
-    var orderViewModel = OrderViewModel()
+//StateObject ile tek bir instance oluşur
+   @StateObject private var orderViewModel = OrderViewModel()
     var body: some Scene {
         WindowGroup {
             RootTabView().environmentObject(orderViewModel)
