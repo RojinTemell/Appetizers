@@ -16,8 +16,11 @@ final class CategoryViewModel{
 
 
     func getCategories() async{
+        guard categories.isEmpty else {
+            state = .success
+            return
+        }
         state = .loading
-        guard categories.isEmpty else { return }
         do {
             categories = try await NetworkManager.shared.getCategories()
             print(categories.count)
