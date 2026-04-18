@@ -12,6 +12,7 @@ struct MealDetailView: View {
     var meal:Meal
     @Binding var isDetail:Bool
     @EnvironmentObject var orderViewModel: OrderViewModel
+    @Environment(\.openURL) private var openURL
     var body: some View {
         VStack{
             ImageWidget(urlString: meal.strMealThumb)
@@ -20,14 +21,25 @@ struct MealDetailView: View {
 
           InstructionsWidget(strInst: meal.strInstructions)
                .frame(maxHeight:300)
-            Button{
-                orderViewModel.add(meal)
-                isDetail = false
-            }label :{
-                Text("Add to Order")
-            }
-            .modifier(StandarButtonStyle())
-            .padding(.bottom,20)
+
+            HStack{
+                Button{
+                    orderViewModel.add(meal)
+                    isDetail = false
+                }label :{
+                    Text("Add to Order")
+                }
+                .modifier(StandarButtonStyle())
+
+                Button{
+                    openURL(URL(string:meal.strYoutube)!)
+                }label :{
+                    Text("YouTube'da İzle")
+                }
+                .modifier(StandarButtonStyle())
+
+            }   .padding(.bottom,20)
+
 
 
         }.frame(width: 320,height: 600)

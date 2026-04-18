@@ -24,6 +24,10 @@
 - `NSCache` (image caching)
 - `FileManager` (kullanıcı verisi kalıcılığı)
 
+### Uygulama Ekran Görüntüleri
+
+| <img src="Appetizers/screenshots/meals.png" width="200"> | <img src="Appetizers/screenshots/mealDetail.png" width="200"> | <img src="Appetizers/screenshots/orders.png" width="200"> |<img src="Appetizers/screenshots/account.png" width="200">|<img src="Appetizers/screenshots/empty.png" width="200">
+
 ## 📡 API
 
 Uygulama [TheMealDB](https://www.themealdb.com/api.php) ücretsiz API'sini kullanır:
