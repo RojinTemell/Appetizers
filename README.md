@@ -2,6 +2,14 @@
 
 **Appetizers**, [TheMealDB](https://www.themealdb.com/api.php) API'sini kullanarak yemek kategorilerini, tariflerini ve detaylarını keşfetmenizi sağlayan bir iOS uygulamasıdır. SwiftUI ve MVVM mimarisi ile geliştirilmiştir.
 
+## 📸 Ekran Görüntüleri
+<p align="center">
+  <img src="Appetizers/screenshots/category.png" width="200"/>
+   <img src="Appetizers/screenshots/meals.png" width="200"/>
+  <img src="Appetizers/screenshots/mealDetail.png" width="200"/>
+  <img src="Appetizers/screenshots/orderDelete.png" width="200"/>
+</p>
+
 ## ✨ Özellikler
 
 - 🗂️ **Kategori Listesi** — TheMealDB'den çekilen yemek kategorilerini görüntüleme
@@ -42,10 +50,6 @@ Proje **MVVM (Model-View-ViewModel)** deseni ile yapılandırılmıştır:
 - **ViewModel**: İş mantığı, API çağrıları ve state yönetimi — `@Observable` ile reaktif
 
 Navigation, tab'a özel `NavigationPath`'leri yöneten merkezi bir `AppRouter` üzerinden yapılır.
-
-## 👩‍💻 Geliştirici
-
-**Rojin** — Nisan 2026
 
 ## 📄 Lisans
 
