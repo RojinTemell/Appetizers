@@ -1,8 +1,8 @@
-# Appetizers 🍽️
+# 🍽️ Appetizers
 
-**Appetizers**, [TheMealDB](https://www.themealdb.com/api.php) API'sini kullanarak yemek kategorilerini, tariflerini ve detaylarını keşfetmenizi sağlayan bir iOS uygulamasıdır. SwiftUI ve MVVM mimarisi ile geliştirilmiştir.
+> A fully-featured iOS app that lets you explore thousands of meal categories, recipes, and step-by-step cooking details — built with **SwiftUI** and a clean **MVVM** architecture.
 
-## 📸 Ekran Görüntüleri
+
 <p align="center">
   <img src="Appetizers/screenshots/category.png" width="200"/>
    <img src="Appetizers/screenshots/meals.png" width="200"/>
@@ -10,47 +10,58 @@
   <img src="Appetizers/screenshots/orderDelete.png" width="200"/>
 </p>
 
-## ✨ Özellikler
 
-- 🗂️ **Kategori Listesi** — TheMealDB'den çekilen yemek kategorilerini görüntüleme
-- 🔎 **Yemek Arama & Listeleme** — Kategoriye göre yemekleri listeleme
-- 📖 **Yemek Detayı** — Tarif adımları, bölge bilgisi ve YouTube video bağlantısı
-- 🛒 **Sipariş (Order) Sistemi** — Yemekleri sepete ekleyip sipariş oluşturma, tab üzerinde badge ile adet gösterimi
-- 👤 **Hesap Yönetimi** — Kullanıcı bilgilerini (ad, soyad, e-posta) formdan kaydetme, e-posta doğrulama
-- 🖼️ **Görsel Önbellekleme** — `NSCache` ile indirilen görselleri cache'leme
-- 🧭 **Navigation Routing** — `NavigationStack` ve özel `AppRouter` ile tab'lar arası yönlendirme
-- ⚠️ **Hata Yönetimi** — `APError` ve `AlertContext` ile kullanıcı dostu uyarılar
+## ✨ What I Built
 
-## 🛠️ Kullanılan Teknolojiler
-
-- **Swift** & **SwiftUI**
-- **MVVM** mimari deseni
-- **async/await** ile modern ağ istekleri (`URLSession`)
-- `@Observable` (iOS 17+ Observation framework)
-- `@StateObject`, `@EnvironmentObject`
-- `NavigationStack` & `NavigationPath`
-- `NSCache` (image caching)
-- `FileManager` (kullanıcı verisi kalıcılığı)
-
-## 📡 API
-
-Uygulama [TheMealDB](https://www.themealdb.com/api.php) ücretsiz API'sini kullanır:
-
-- `GET /categories.php` — Tüm kategorileri getirir
-- `GET /search.php?s={meal}` — İsme göre yemek arar
-- `GET /lookup.php?i={id}` — ID'ye göre yemek detayını getirir
+| Feature | Description |
+|---|---|
+| 🗂️ **Category Browser** | Fetches and displays all meal categories live from TheMealDB API |
+| 🔎 **Search & List** | Browse meals filtered by category in real time |
+| 📖 **Meal Detail View** | Full recipe steps, region info, and a YouTube video link |
+| 🛒 **Order System** | Add meals to cart, create orders, and see live badge counts on the tab bar |
+| 👤 **Account Management** | Save user info (name, surname, email) with built-in email validation |
+| 🖼️ **Image Caching** | Downloaded images cached with `NSCache` for smooth, fast scrolling |
+| 🧭 **Navigation Routing** | Tab-aware routing via a custom `AppRouter` using `NavigationStack` & `NavigationPath` |
+| ⚠️ **Error Handling** | User-friendly alerts powered by `APError` and a global `AlertContext` |
 
 
-## 🧩 Mimari
 
-Proje **MVVM (Model-View-ViewModel)** deseni ile yapılandırılmıştır:
+## 🛠️ Tech Stack
 
-- **Model**: API'den gelen veriyi temsil eden `Codable` struct'lar (`Meal`, `Category`, `User`)
-- **View**: SwiftUI ile yazılmış ekranlar; tek görevi UI'yi göstermek
-- **ViewModel**: İş mantığı, API çağrıları ve state yönetimi — `@Observable` ile reaktif
+- **Swift** & **SwiftUI** — 100% declarative UI
+- **MVVM** architecture — clear separation of concerns
+- **async/await** + `URLSession` — modern, clean networking
+- `@Observable` — iOS 17+ reactive state management
+- `@StateObject` & `@EnvironmentObject` — dependency injection through the view hierarchy
+- `NavigationStack` & `NavigationPath` — programmatic, type-safe navigation
+- `NSCache` — performant in-memory image caching
+- `FileManager` — persistent local user data storage
 
-Navigation, tab'a özel `NavigationPath`'leri yöneten merkezi bir `AppRouter` üzerinden yapılır.
 
-## 📄 Lisans
+## 🧩 Architecture Deep Dive
 
-Bu proje eğitim amaçlı geliştirilmiştir. Dilediğiniz gibi kullanabilir ve geliştirebilirsiniz.
+The project strictly follows **MVVM (Model-View-ViewModel)**:
+
+```
+Model       →  Codable structs (Meal, Category, User) — pure data, no logic
+View        →  SwiftUI screens — only responsible for rendering UI
+ViewModel   →  Business logic, API calls, state — reactive via @Observable
+```
+
+Navigation is handled by a centralized **`AppRouter`** that manages per-tab `NavigationPath` stacks, enabling seamless cross-tab routing without tight coupling between views.
+
+
+## 📡 API Integration
+
+Powered by the free [TheMealDB API](https://www.themealdb.com/api.php):
+
+```
+GET /categories.php        →  Fetch all meal categories
+GET /search.php?s={meal}   →  Search meals by name
+GET /lookup.php?i={id}     →  Get full meal detail by ID
+```
+
+
+## 📄 License
+
+This project was built for educational purposes. Feel free to use it, fork it, and build on top of it however you like.
